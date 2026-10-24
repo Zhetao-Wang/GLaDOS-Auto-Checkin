@@ -642,7 +642,7 @@ def checkin_account(
     result = "fail"
     exchange_status = "-"  # 兑换结果描述（未配置时保持 "-"，不输出到日志）
 
-        try:
+    try:
         # 1. 签到
         j = checkin_request(session, headers)
         logger.info(
