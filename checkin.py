@@ -533,6 +533,37 @@ PUSH_CHANNELS: List[Tuple[str, List[str], Callable[[str, str], bool]]] = [
      lambda t, c: push_yunhu(os.getenv("YUNHU_TOKEN", ""), os.getenv("YUNHU_RECV_ID", ""), t, c)),
 ]
 
+def push_email(title: str, content: str) -> bool:
+    import smtplib
+    import ssl
+    from email.message import EmailMessage
+
+    sender = os.environ["SMTP_USER"].strip()
+    password = os.environ["SMTP_PASSWORD"].strip()
+    message = EmailMessage()
+    message["Subject"] = title
+    message["From"] = sender
+    message["To"] = sender
+    message.set_content(content)
+
+    try:
+        with smtplib.SMTP_SSL(
+            "smtp.qq.com", 465, timeout=30,
+            context=ssl.create_default_context(),
+        ) as smtp:
+            smtp.login(sender, password)
+            smtp.send_message(message)
+        logger.info("邮件推送成功")
+        return True
+    except Exception as exc:
+        logger.warning("邮件推送失败: %s", type(exc).__name__)
+        return False
+
+
+PUSH_CHANNELS.append(
+    ("QQ邮箱", ["SMTP_USER", "SMTP_PASSWORD"], push_email)
+)
+
 
 def push_all(title: str, content: str) -> Tuple[int, int]:
     """
