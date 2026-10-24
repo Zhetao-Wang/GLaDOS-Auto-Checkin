@@ -33,11 +33,8 @@ EXCHANGE_URL = "https://glados.cloud/api/user/exchange"
 HEADERS_BASE = {
     "origin": "https://glados.cloud",
     "referer": "https://glados.cloud/console/checkin",
-    "user-agent": (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/120.0.0.0 Safari/537.36"
-    ),
+    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+}
     # 注意：使用 requests 的 json= 参数时会自动设置 Content-Type: application/json，
     # 此处无需（也不应）手动设置 content-type，否则与 requests 默认行为重复。
 }
