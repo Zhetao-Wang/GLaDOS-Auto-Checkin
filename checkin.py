@@ -642,9 +642,15 @@ def checkin_account(
     result = "fail"
     exchange_status = "-"  # 兑换结果描述（未配置时保持 "-"，不输出到日志）
 
-    try:
+        try:
         # 1. 签到
         j = checkin_request(session, headers)
+        logger.info(
+            "签到诊断: code=%s, reason=%s, loginDevice=%s",
+            j.get("code"),
+            j.get("reason"),
+            j.get("loginDevice"),
+        )
         code = j.get("code", -2)
         message = j.get("message", "")
         # H1：GLaDOS 不返回 points 字段，从 message 文本解析本次获得积分
